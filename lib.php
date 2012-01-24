@@ -17,7 +17,12 @@
  * @return bool false if file not found, does not return if found - justsend the file
  */
 function local_mobile_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload) {
-    $langs = array('en', 'zh', 'fr');
+    $langs = array('en' => 'en',
+                   'fr' => 'fr',
+                   'zh_cn' => 'zh-Hans',
+                   'zh_tw' => 'zh-Hant',
+                   'ja' => 'ja',
+                    );
     local_mobile_generate_languages($langs);
     die;
 }
@@ -46,10 +51,12 @@ function local_mobile_generate_languages($langs = array()) {
     $fs = get_file_storage();
     $rootpath = $CFG->dataroot . '/local_mobile/lang';
     mkdir($rootpath, $CFG->directorypermissions, true);
-    foreach ($langs as $lang) {
+    // $key is moodle language short name
+    // $lang is xcode language short name
+    foreach ($langs as key => $lang) {
         $langpath = $rootpath . '/' . $lang . '.lproj';
         mkdir($langpath, $CFG->directorypermissions, true);
-        $text = local_mobile_get_language_text($lang);
+        $text = local_mobile_get_language_text($key);
         file_put_contents($langpath . '/'. 'Localizable.strings', $text);
     }
     $filelist = array(
