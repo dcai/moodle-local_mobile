@@ -53,7 +53,8 @@ function local_mobile_generate_languages($langs = array()) {
     mkdir($rootpath, $CFG->directorypermissions, true);
     // $key is moodle language short name
     // $lang is xcode language short name
-    foreach ($langs as key => $lang) {
+    foreach ($langs as $key => $lang) {
+
         $langpath = $rootpath . '/' . $lang . '.lproj';
         mkdir($langpath, $CFG->directorypermissions, true);
         $text = local_mobile_get_language_text($key);
